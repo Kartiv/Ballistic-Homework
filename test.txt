@@ -37,8 +37,8 @@ The requests go to the main server, which is composed of 3 different parts (mayb
 			previously) are available, and manages which request gets calculated on which unit.
 There could also be a data collection part, which collects enviormental data such as wind etc and reports it to the server, which then
 might either report this data to the specific computation units which require it (if they send such requests to the main server), or
-to a sub-server which manages the computation units more strictly and which contains this necessary information and more in it, which
-these units could then access easily (although it will technically still be a part of the 'main server' if we follow the set up so far).
+to a sub-server which manages the computation units more strictly and which contains this necessary information and more within it, which
+these units could then access easily (although it will technically still be a part of the 'main server' if we stick to the previous set up).
 This is the basic idea of what I have in mind.
 
 Part F-

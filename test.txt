@@ -1,0 +1,77 @@
+Notes:
+in order for Q3 to work properly, Q3server needs to be run first (with node etc).
+I didn't tidy up the code much or optimized is or added comments etc in order to stay in the time frame, sorry about that.
+This is also written in English since it is easier to write etc in notepad and also because while writing code in English I am also
+thinking in English quite a bit, so sorry if this is an inconvenience.
+
+Q1
+Part D-
+In order to check that our program returns correct answers we can first conduct small lab experiments to confirm our theory and equations,
+and compare them to the results of the program. If we believe our equations, we can also check a couple hand-calculated cases with random
+initial conditions to be slightly more convinced that the program works. Checking edge cases (like for example, angle of pi/2) is also
+useful.
+There are also a couple of edge cases that technically might make the program crash (in this case, due to division by 0 while
+calculating the end angle). For example, if v0=0, or alpha=+-pi/2. The program thankfully doesn't crash with those initial conditions 
+though (thanks to the atan2 function, which is practically built to avoid these cases). The program also works for angles greater
+than pi/2, including 'negative' angles (which aren't technically the expected type of input. Checking is informative since this changes
+the sign of some sines and cosines etc (this also helped me catch a small typing error)).
+If we would want to deal with specific edge cases we can run a check on the supplied initial conditions to make sure that they are 'valid'.
+
+Part E-
+Air drag is an important aspect of this system that we did not implement and could implement ideally. If the missile is ment to fly very
+high above the ground, we could also adjust how we model gravity in order to more accurately determine the forces acting on the missile
+(the force of gravity is smaller the farther away the missile is from the ground, and while this is negligible at low altitude, it 
+matters more at higher altitudes). Wind direction/strength are important enviromental factors that should also be taken into account,
+as they too can hinder the trajectory of the missile.
+
+Q2
+Part D- (basic rough sketch is in a different file in this folder)
+The requests go to the main server, which is composed of 3 different parts (maybe of the same OS using k8s):
+	First Part- request management. This part of the main server contains requests (maybe a history of requests too. as a spoiler
+			to the next parts, it might contain a list of recently frequent targets in order to not repeat calculations,
+			it could also check the validity of requests, etc.)
+	Second Part- firing system management. This part will be tasked with keeping track of which firing systems are currently available,
+			which ones are operational/need repair, etc, and managing which requests will be fired from which system.
+	Third Part- computation management. This part checks which computation units (which may be many different computers/same
+			computer with k8s used. I am not entirely sure which is better for this as I haven't dealt with this stuff
+			previously) are available, and manages which request gets calculated on which unit.
+There could also be a data collection part, which collects enviormental data such as wind etc and reports it to the server, which then
+might either report this data to the specific computation units which require it (if they send such requests to the main server), or
+to a sub-server which manages the computation units more strictly and which contains this necessary information and more in it, which
+these units could then access easily (although it will technically still be a part of the 'main server' if we follow the set up so far).
+This is the basic idea of what I have in mind.
+
+Part F-
+The system should reject the request, and raise an alert to notify operators of this request.
+
+Part G-
+We could encrypt messages to and from the sources. It should be easier to encrypt messages in this system than it is to encrypt online
+(with RSA for example), since everything should be relatively well coordinated in the physical world so passing encryption keys should
+be relatively simple. We could also make the entire system "closed", so that it doesn't connect to anything outside of itself (like the
+internet), and as such should be hard to penetrate and read (this would still likely require encryption of messages though since they 
+might be transferred by radio waves and not necessarily by wire).
+
+Part H-
+As stated before, the main server could keep a history of previous requests, specifically recent requests, so it wouldn't need to
+re-calculate everything for the same target. There could also be a list of frequent targets, etc. 
+
+Part I-
+We could split the server into a couple of identical parts that all function exactly as the main server does. Then each one of those
+functions exactly the same as the normal server, except they all run in parallel, making everything faster (and reducing 'stress' from
+a single server). Maybe we could also have this happen dynamically, so that there won't constantly be a couple of instances of the server,
+and they will run only when it gets overloaded with requests.
+
+
+Q3
+Part D-
+The interface should look relatively organized and be readable. It shouldn't be annoying to deal with. If there are any errors and such,
+it should make it clear to the user that there was an error. Having a response notification that confirms that the request was received
+and taken care of is also nice (that is, if a response isn't immediate), etc.
+
+Part E-
+In this particular case, all the interface needs is a graphical display and a couple of buttons (and a way to connect to the server), 
+so it could use any technology that has those available, so long as it is secure enough. The interface itself will be composed of,
+as mentioned, a display, and an interactive part (buttons). 
+
+
+
